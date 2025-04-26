@@ -1,6 +1,6 @@
-package com.example.loginsystem.repository;
+package com.example.internshipplatform.repository;
 
-import com.example.loginsystem.model.User;
+import com.example.internshipplatform.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

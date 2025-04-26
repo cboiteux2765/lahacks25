@@ -1,7 +1,7 @@
-package com.example.loginsystem.service;
+package com.example.internshipplatform.service;
 
-import com.example.loginsystem.model.User;
-import com.example.loginsystem.repository.UserRepository;
+import com.example.internshipplatform.model.User;
+import com.example.internshipplatform.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

@@ -2,8 +2,8 @@ package com.example.internshipplatform.service;
 
 import com.example.internshipplatform.model.User;
 import org.springframework.stereotype.Service;
-import com.kornkutan.groq4j.GroqApi;
-import com.kornkutan.groq4j.GroqApiResponse;
+// import com.kornkutan.groq4j.GroqApi;
+// import com.kornkutan.groq4j.GroqApiResponse;
 
 import java.util.*; 
 

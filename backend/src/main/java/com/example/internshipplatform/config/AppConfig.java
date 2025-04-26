@@ -12,8 +12,4 @@ public class AppConfig {
         return new RestTemplate();
     }
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 }

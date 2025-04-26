@@ -5,9 +5,12 @@ import com.example.internshipplatform.model.InternshipAdvice;
 import com.example.internshipplatform.repository.InternshipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.http.HttpHeaders;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,16 +44,6 @@ public class InternshipService {
         return internshipRepository.save(internship);
     }
 
-    public Internship updateInternship(String id, Internship internshipDetails) {
-        Internship internship = internshipRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Internship not found with id " + id));
-        internship.setTitle(internshipDetails.getTitle());
-        internship.setDescription(internshipDetails.getDescription());
-        internship.setCompany(internshipDetails.getCompany());
-        internship.setRequirements(internshipDetails.getRequirements());
-        return internshipRepository.save(internship);
-    }
-
     public void deleteInternship(String id) {
         internshipRepository.deleteById(id);
     }
@@ -59,13 +52,13 @@ public class InternshipService {
         String url = String.format("%s/advice?strength=%s", groqApiUrl, strength);
 
         // Set headers for the API request
-        var headers = new org.springframework.http.HttpHeaders();
+        org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
         headers.set("Authorization", "Bearer " + groqApiKey);
 
-        var entity = new org.springframework.http.HttpEntity<>(headers);
+        HttpEntity entity = new org.springframework.http.HttpEntity<>(headers);
 
         // Make the API call
-        var response = restTemplate.exchange(
+        ResponseEntity<String> response = restTemplate.exchange(
             url,
             org.springframework.http.HttpMethod.GET,
             entity,

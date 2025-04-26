@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/internships")
@@ -27,9 +28,12 @@ public class InternshipController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Internship> getInternshipById(@PathVariable String id) {
-        return internshipService.getInternshipById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        Optional<Internship> internshipOpt = internshipService.getInternshipById(id);
+        if (internshipOpt.isPresent()) {
+            return ResponseEntity.ok(internshipOpt.get()); 
+        } else {
+            return ResponseEntity.notFound().build(); 
+        }
     }
 
     @PostMapping
@@ -37,19 +41,10 @@ public class InternshipController {
         return internshipService.createInternship(internship);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Internship> updateInternship(@PathVariable String id, @RequestBody Internship internship) {
-        return internshipService.updateInternship(id, internship)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteInternship(@PathVariable String id) {
-        if (internshipService.deleteInternship(id)) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+        internshipService.deleteInternship(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/advice")
