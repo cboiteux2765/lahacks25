@@ -1,0 +1,6 @@
+/lahacks25/.mvn
+/lahacks25/.vscode
+/backend/src/main/resources/application.properties
+/.env
+/app/node_modules
+/frontend/node_modules

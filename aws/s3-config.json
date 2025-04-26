@@ -1,0 +1,7 @@
+{
+  "bucketName": "your-bucket-name",
+  "region": "your-region",
+  "accessKeyId": "your-access-key-id",
+  "secretAccessKey": "your-secret-access-key",
+  "s3Endpoint": "https://s3.your-region.amazonaws.com"
+}
