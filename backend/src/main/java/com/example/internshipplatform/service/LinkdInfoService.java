@@ -3,97 +3,87 @@ package com.example.internshipplatform.service;
 import com.example.internshipplatform.model.LinkdInfo;
 import com.example.internshipplatform.repository.LinkdInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class LinkdInfoService {
-
-    @Autowired
-    private LinkdInfoRepository linkdInfoRepository;
-
-    /**
-     * Fetch all LinkdInfo records.
-     *
-     * @return A list of all LinkdInfo objects.
-     */
-    public List<LinkdInfo> getAllLinkdInfo() {
-        return linkdInfoRepository.findAll();
+    public static class Profile {
+        public String id;
+        public String name;
+        public String location;
+        public String headline;
+        public String description;
+        public String title;
+        public String profilePictureUrl;
+        public String linkedinUrl;
     }
 
-    /**
-     * Fetch a LinkdInfo record by its ID.
-     *
-     * @param id The ID of the LinkdInfo record.
-     * @return An Optional containing the LinkdInfo object if found, or empty if not.
-     */
-    public Optional<LinkdInfo> getLinkdInfoById(String id) {
-        return linkdInfoRepository.findById(id);
+    public static class Experience {
+        public String title;
+        public String companyName;
+        public String startDate;
+        public String endDate;
+        public String description;
+        public String location;
+        public String companyLogo;
     }
 
-    /**
-     * Create a new LinkdInfo record.
-     *
-     * @param linkdInfo The LinkdInfo object to create.
-     * @return The created LinkdInfo object.
-     */
-    public LinkdInfo createLinkdInfo(LinkdInfo linkdInfo) {
-        return linkdInfoRepository.save(linkdInfo);
+    public static class Education {
+        public String degree;
+        public String fieldOfStudy;
+        public String schoolName;
+        public String startDate;
+        public String endDate;
+        public String description;
+        public String schoolLogo;
     }
 
-    /**
-     * Update an existing LinkdInfo record.
-     *
-     * @param id        The ID of the LinkdInfo record to update.
-     * @param updatedLinkdInfo The updated LinkdInfo object.
-     * @return An Optional containing the updated LinkdInfo object if found, or empty if not.
-     */
-    public Optional<LinkdInfo> updateLinkdInfo(String id, LinkdInfo updatedLinkdInfo) {
-        return linkdInfoRepository.findById(id).map(existingLinkdInfo -> {
-            existingLinkdInfo.setFullName(updatedLinkdInfo.getFullName());
-            existingLinkdInfo.setEmail(updatedLinkdInfo.getEmail());
-            existingLinkdInfo.setPosition(updatedLinkdInfo.getPosition());
-            existingLinkdInfo.setLinkedinLink(updatedLinkdInfo.getLinkedinLink());
-            return linkdInfoRepository.save(existingLinkdInfo);
-        });
+    public static class LinkdResult {
+        public Profile profile;
+        public List<Experience> experience;
+        public List<Education> education;
     }
 
-    /**
-     * Delete a LinkdInfo record by its ID.
-     *
-     * @param id The ID of the LinkdInfo record to delete.
-     * @return True if the record was deleted, false if not found.
-     */
-    public boolean deleteLinkdInfo(String id) {
-        if (linkdInfoRepository.existsById(id)) {
-            linkdInfoRepository.deleteById(id);
-            return true;
-        }
-        return false;
+    public static class LinkdResponse {
+        public List<LinkdResult> results;
+        public int total;
+        public String query;
     }
 
-    /**
-     * Fetch professionals based on user's strength and goals.
-     *
-     * @param strength The user's strength (e.g., "communication", "resume").
-     * @param goals    The user's goals (e.g., "Software Engineering Internship").
-     * @return A list of professionals matching the criteria.
-     */
-    public List<LinkdInfo> fetchProfessionals(String strength, String goals) {
-        List<LinkdInfo> allProfessionals = linkdInfoRepository.findAll();
-        List<LinkdInfo> matchingProfessionals = new ArrayList<>();
+    @Value("${linkd.token}")
+    private String LinkdToken;
 
-        for (LinkdInfo professional : allProfessionals) {
-            if (goals.toLowerCase().contains("software") && professional.getPosition().toLowerCase().contains("software")) {
-                matchingProfessionals.add(professional);
-            } else if (strength.toLowerCase().contains("communication") && professional.getPosition().toLowerCase().contains("manager")) {
-                matchingProfessionals.add(professional);
-            }
-        }
+    private final RestTemplate restTemplate;
 
-        return matchingProfessionals;
+    public LinkdInfoService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
+    public LinkdResponse LinkdSearch(String query, String school) {
+        String url = "https://search.linkd.inc/api/search/users";
+        String urlWithParams = UriComponentsBuilder.fromHttpUrl(url)
+            .queryParam("query", query)
+            .queryParam("limit", 3)
+            .queryParam("school", school)
+            .toUriString();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + LinkdToken);
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        return restTemplate
+            .exchange(urlWithParams, HttpMethod.GET, entity, LinkdResponse.class)
+            .getBody();
     }
 }
