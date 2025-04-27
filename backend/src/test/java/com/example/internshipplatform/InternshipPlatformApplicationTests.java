@@ -8,6 +8,6 @@ class InternshipPlatformApplicationTests {
 
     @Test
     void contextLoads() {
+        // This test ensures the application context loads successfully
     }
-
 }

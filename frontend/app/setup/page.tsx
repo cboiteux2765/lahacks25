@@ -174,26 +174,6 @@ export default function SetupPage() {
                             className="w-full border border-gray-300 rounded-lg p-2"
                             placeholder="Describe your goals..."
                         />
-                        <label className="block mt-4">
-                            <input
-                                type="radio"
-                                name="goals"
-                                value="other"
-                                onChange={handleChange}
-                                className="mr-2"
-                            />
-                            Other
-                        </label>
-                        {formData.goals === "other" && (
-                            <input
-                                type="text"
-                                name="otherGoals"
-                                value={formData.otherGoals}
-                                onChange={handleChange}
-                                className="w-full border border-gray-300 rounded-lg p-2 mt-2"
-                                placeholder="Please specify your goals"
-                            />
-                        )}
                     </div>
                 )}
 
