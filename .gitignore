@@ -1,6 +1,36 @@
-/lahacks25/.mvn
-/lahacks25/.vscode
-/backend/src/main/resources/application.properties
-/app/node_modules
-/frontend/node_modules
-/backend/target/classes/application.properties
+# Maven target directory
+target/
+
+# Maven wrapper
+.mvn/
+.mvn/wrapper/
+
+# IDEs and editors
+# IntelliJ IDEA
+.idea/
+*.iml
+# Eclipse
+.project
+.classpath
+.settings/
+
+# Build artifacts
+*.jar
+*.war
+*.ear
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*~
+
+# Application properties files
+**/application.properties
+**/application.yml
