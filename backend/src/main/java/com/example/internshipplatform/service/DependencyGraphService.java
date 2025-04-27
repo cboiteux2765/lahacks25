@@ -1,28 +1,25 @@
 package com.example.internshipplatform.service;
 
-import com.example.internshipplatform.model.User;
 import org.springframework.stereotype.Service;
-// import com.kornkutan.groq4j.GroqApi;
-// import com.kornkutan.groq4j.GroqApiResponse;
 
-import java.util.*; 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class DependencyGraphService {
 
-    public Map<String, List<String>> generateDependencyGraph(User User) {
-        Map<String, List<String>> dependencyGraph = new HashMap<>();
+    public Map<String, Object> generateDependencyGraph(Map<String, Object> analysisResult) {
+        Map<String, Object> dependencyGraph = new HashMap<>();
 
-        // Example logic: Generate graph based on work experience and skills
-        for (String experience : User.getWorkExperience()) {
-            if (experience.contains("Google")) {
-                dependencyGraph.put("Improve Leadership Skills", Arrays.asList("Lead a Team", "Take Management Courses"));
+        // Example logic to generate a dependency graph based on analysis
+        if (analysisResult.containsKey("completedStages")) {
+            List<String> completedStages = (List<String>) analysisResult.get("completedStages");
+            if (completedStages.contains("resume")) {
+                dependencyGraph.put("nextSteps", List.of("Apply for internships", "Prepare for interviews"));
+            } else {
+                dependencyGraph.put("nextSteps", List.of("Improve resume", "Build projects"));
             }
-        }
-
-        // Example logic: Generate graph based on projects
-        for (String project : User.getProjects()) {
-            dependencyGraph.put("Showcase Projects", Arrays.asList("Create Portfolio Website", "Share on LinkedIn"));
         }
 
         return dependencyGraph;

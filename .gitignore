@@ -34,3 +34,8 @@ Thumbs.db
 # Application properties files
 **/application.properties
 **/application.yml
+/frontend/node_modules
+/backend/target
+/frontend/.env
+/backend/src/controllers/node_modules
+/frontend/.env.local
