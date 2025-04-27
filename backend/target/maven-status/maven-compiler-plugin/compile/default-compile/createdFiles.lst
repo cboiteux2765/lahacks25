@@ -7,9 +7,7 @@ com\example\internshipplatform\service\InternshipService.class
 com\example\internshipplatform\repository\InternshipRepository.class
 com\example\internshipplatform\model\Internship.class
 com\example\internshipplatform\repository\UserRepository.class
-com\example\internshipplatform\model\User$Project.class
 com\example\internshipplatform\service\UserService.class
-com\example\internshipplatform\model\User$WorkExperience.class
 com\example\internshipplatform\model\InternshipAdvice.class
 com\example\internshipplatform\model\User.class
 com\example\internshipplatform\service\LinkdInfoService.class

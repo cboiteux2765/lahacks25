@@ -14,14 +14,14 @@ public class DependencyGraphService {
         Map<String, List<String>> dependencyGraph = new HashMap<>();
 
         // Example logic: Generate graph based on work experience and skills
-        for (User.WorkExperience experience : User.getWorkExperience()) {
-            if (experience.getSkills().contains("Leadership")) {
+        for (String experience : User.getWorkExperience()) {
+            if (experience.contains("Google")) {
                 dependencyGraph.put("Improve Leadership Skills", Arrays.asList("Lead a Team", "Take Management Courses"));
             }
         }
 
         // Example logic: Generate graph based on projects
-        for (User.Project project : User.getProjects()) {
+        for (String project : User.getProjects()) {
             dependencyGraph.put("Showcase Projects", Arrays.asList("Create Portfolio Website", "Share on LinkedIn"));
         }
 

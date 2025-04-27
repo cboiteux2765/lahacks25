@@ -1,15 +1,17 @@
 package com.example.internshipplatform.model;
 
 import java.util.List;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "users")
 public class User {
 
     private String id;
     private String password;
     private String name;
     private String email;
-    private List<WorkExperience> workExperience;
-    private List<Project> projects;
+    private List<String> workExperience;
+    private List<String> projects;
     private List<String> skills;
 
     // Getters and Setters
@@ -29,19 +31,19 @@ public class User {
         this.email = email;
     }
 
-    public List<WorkExperience> getWorkExperience() {
+    public List<String> getWorkExperience() {
         return workExperience;
     }
 
-    public void setWorkExperience(List<WorkExperience> workExperience) {
+    public void setWorkExperience(List<String> workExperience) {
         this.workExperience = workExperience;
     }
 
-    public List<Project> getProjects() {
+    public List<String> getProjects() {
         return projects;
     }
 
-    public void setProjects(List<Project> projects) {
+    public void setProjects(List<String> projects) {
         this.projects = projects;
     }
 
@@ -67,68 +69,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    // Inner classes for WorkExperience and Project
-    public static class WorkExperience {
-        private String companyName;
-        private String description;
-        private List<String> skills;
-
-        // Getters and Setters
-        public String getCompanyName() {
-            return companyName;
-        }
-
-        public void setCompanyName(String companyName) {
-            this.companyName = companyName;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
-
-        public List<String> getSkills() {
-            return skills;
-        }
-
-        public void setSkills(List<String> skills) {
-            this.skills = skills;
-        }
-    }
-
-    public static class Project {
-        private String name;
-        private String description;
-        private String link;
-
-        // Getters and Setters
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
-
-        public String getLink() {
-            return link;
-        }
-
-        public void setLink(String link) {
-            this.link = link;
-        }
     }
 }
